@@ -26,7 +26,7 @@ module.exports = Waline({
       }
     }
 
-    comment.comment = comment.comment.replace(/<img class="wl-emoji" src="\/images\/emote\/(.+)" alt="(.+)\.(?:gif|png)">/, '<img class="wl-emoji" src="/images/emote/$1" alt="$2">'); // 去除表情的替代文本的扩展名
+    comment.comment = comment.comment.replace(/<img class="wl-emoji" src="\/img\/emote\/(.+)" alt="(.+)\.(?:gif|png)">/, '<img class="wl-emoji" src="/img/emote/$1" alt="$2">'); // 去除表情的替代文本的扩展名
   },
   async avatarUrl(comment) { // 在获取头像地址时
     if (comment.link && /^(?:(?:https?:)?\/\/)?space\.bilibili\.com\/\d+(?:[\?\/#].*)?$/i.test(comment.link.trim())) { // 输入的链接为 B 站个人空间网址，返回 UID 对应的 B 站用户的头像
