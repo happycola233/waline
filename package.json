@@ -1,9 +1,11 @@
 {
   "name": "template",
   "version": "0.0.1",
+  "type": "module",
   "private": true,
   "dependencies": {
-    "@waline/vercel": "latest",
-    "@vercel/kv": "latest"
+    "@upstash/redis": "latest",
+    "@vercel/functions": "latest",
+    "@waline/vercel": "latest"
   }
 }
