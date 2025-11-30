@@ -12,7 +12,7 @@
     "link": "https://blog.anheyu.com/",
     "avatar": "https://npm.elemecdn.com/anzhiyu-blog-static@1.0.4/img/avatar.jpg",
     "descr": "生活明朗，万物可爱",
-    "siteshot": "https://npm.elemecdn.com/anzhiyu-theme-static@1.1.6/img/blog.anheyu.com.jpg"
+    "siteshot": "https://npm.elemecdn.com/anzhiyu-theme-static@1.1.10/img/blog.anheyu.com.jpg"
   }]
 }, {
   "class_name": "推荐博客",
@@ -23,7 +23,7 @@
     "link": "https://blog.anheyu.com/",
     "avatar": "https://npm.elemecdn.com/anzhiyu-blog-static@1.0.4/img/avatar.jpg",
     "descr": "生活明朗，万物可爱",
-    "siteshot": "https://npm.elemecdn.com/anzhiyu-theme-static@1.1.6/img/blog.anheyu.com.jpg",
+    "siteshot": "https://npm.elemecdn.com/anzhiyu-theme-static@1.1.10/img/blog.anheyu.com.jpg",
     "color": "vip",
     "tag": "技术"
   }, {
@@ -54,6 +54,14 @@
     "avatar": "https://img.727252.xyz/i/2025/09/02/556752.webp",
     "descr": "Time goes by, and the years go by.",
     "siteshot": "/img/friendship-links/szh-rainettle-top-siteshot.png",
+    "color": "vip",
+    "tag": "技术"
+  }, {
+    "name": "SЕSSのB10GТЕ5Т",
+    "link": "https://sess.xhustudio.eu.org",
+    "avatar": "https://static.xhustudio.eu.org/images/jpeg/102411014.jpg",
+    "descr": "Session 的个人博客, 这里有各种类型的有趣的文章内容, 网站使用纯 JavaScript 构建",
+    "siteshot": "/img/friendship-links/sess-xhustudio-eu-org.png",
     "color": "vip",
     "tag": "技术"
   }]
