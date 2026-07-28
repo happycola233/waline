@@ -21,8 +21,8 @@ export default Waline({
       }
     }
 
-    if (comment.mail && /^\d+@qq\.com$/i.test(comment.mail.trim())) { // 若输入的邮箱为 QQ 邮箱，就随机生成一个与 QQ 号对应的 UUID
-      const qqNumber = comment.mail.trim().replace(/^(\d+)@qq\.com$/i, '$1'), redis = Redis.fromEnv(),
+    if (comment.mail && /^\d{5,}@qq\.com$/i.test(comment.mail.trim())) { // 若输入的邮箱为 QQ 邮箱，就随机生成一个与 QQ 号对应的 UUID
+      const qqNumber = comment.mail.trim().replace(/^(\d{5,})@qq\.com$/i, '$1'), redis = Redis.fromEnv(),
             hashes = await redis.get('hashes');
       if (!hashes.some(h => h.s === qqNumber)) { // 之前没有存储与该 QQ 号对应的 UUID
         hashes.push({ h: crypto.randomUUID(), s: qqNumber }); // 生成一个与 QQ 号对应的 UUID
@@ -36,8 +36,8 @@ export default Waline({
     if (comment.link && /^(?:(?:https?:)?\/\/)?space\.bilibili\.com\/\d+(?:[\?\/#].*)?$/i.test(comment.link.trim())) { // 输入的链接为 B 站个人空间网址，返回 UID 对应的 B 站用户的头像
       return `https://api.yumeharu.top/api/getuser?mid=${comment.link.trim().replace(/^(?:(?:https?:)?\/\/)?space\.bilibili\.com\/(\d+)(?:[\?\/#].*)?$/i, '$1')}&type=avatar_redirect`;
     } else if (comment.mail?.trim()) { // 输入了邮箱
-      if (/^\d+@qq\.com$/i.test(comment.mail.trim())) { // 邮箱为 QQ 邮箱，返回 QQ 号对应的用户的头像
-        const qqNumber = comment.mail.trim().replace(/^(\d+)@qq\.com$/i, '$1'), redis = Redis.fromEnv(),
+      if (/^\d{5,}@qq\.com$/i.test(comment.mail.trim())) { // 邮箱为 QQ 邮箱，返回 QQ 号对应的用户的头像
+        const qqNumber = comment.mail.trim().replace(/^(\d{5,})@qq\.com$/i, '$1'), redis = Redis.fromEnv(),
               hashes = await redis.get('hashes');
         const hash = hashes.find(h => h.s === qqNumber);
         if (hash) {

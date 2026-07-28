@@ -1,18 +1,43 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "builds": [
+    {
+      "src": "favicon.ico",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "robots.txt",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "api/index.js",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": [
+          "node_modules/@mathjax/mathjax-newcm-font/**/*",
+          "node_modules/mhchemparser/**/*",
+          "node_modules/ip2region/data/**"
+        ]
+      }
+    }
+  ],
+  "env": {
+    "NODE_OPTIONS": "--experimental-require-module"
+  },
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
         { "key": "Access-Control-Allow-Origin", "value": "*" },
-        { "key": "Content-Security-Policy", "value": "default-src 'none'; connect-src 'self' https:; img-src 'self' * data:; media-src 'self' *; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; base-uri 'none'; form-action 'self'; frame-ancestors 'self' https:" },
+        { "key": "Content-Security-Policy", "value": "default-src 'none'; connect-src 'self' https:; frame-src 'self' https:; img-src 'self' * data:; media-src 'self' *; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; base-uri 'none'; form-action 'self'; frame-ancestors 'self' https:" },
         { "key": "Referrer-Policy", "value": "same-origin" },
+        { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains" },
         { "key": "X-Content-Type-Options", "value": "nosniff" },
         { "key": "X-Robots-Tag", "value": "noindex" }
       ]
     }
   ],
-  "installCommand": "npm install --only=production",
+  "installCommand": "npm install --omit=dev",
   "rewrites": [
     { "source": "/(.*)", "destination": "/api/index.js" }
   ]
