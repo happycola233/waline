@@ -19,6 +19,10 @@
           "node_modules/ip2region/data/**"
         ]
       }
+    },
+    {
+      "src": "api/modules.js",
+      "use": "@vercel/node"
     }
   ],
   "env": {
