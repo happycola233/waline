@@ -5,6 +5,52 @@ import { Redis } from '@upstash/redis';
 import Waline from '@waline/vercel';
 
 export default Waline({
+  middlewares: [
+    async (ctx, next) => { // 改编自 https://github.com/wuziqian211/website-api
+      if (ctx.path.toLowerCase() !== '/api/modules' || ctx.method.toUpperCase() !== 'GET') {
+        return next();
+      }
+      try {
+        switch (ctx.param('id')) {
+          case 'qmimg': {
+            const hash = ctx.param('h');
+            if (hash && /^[\da-f]{8}-[\da-f]{4}-4[\da-f]{3}-[89ab][\da-f]{3}-[\da-f]{12}$/.test(hash)) {
+              const redis = Redis.fromEnv(), hashes = await redis.get('hashes');
+              const hashInfo = hashes.find(h => h.h === hash);
+              if (hashInfo) {
+                const resp = await fetch(`https://q1.qlogo.cn/headimg_dl?dst_uin=${hashInfo.s}&spec=4`);
+                if (resp.ok) {
+                  ctx.set('Cache-Control', 's-maxage=600, stale-while-revalidate=3000');
+                  ctx.set('Content-Type', resp.headers.get('Content-Type'));
+                  ctx.body = resp.body;
+                } else {
+                  ctx.status = 404;
+                  ctx.set('Content-Type', 'application/json');
+                  ctx.body = JSON.stringify({ code: -404, message: 'cannot fetch image', data: null });
+                }
+              } else {
+                ctx.status = 404;
+                ctx.set('Content-Type', 'application/json');
+                ctx.body = JSON.stringify({ code: -404, message: 'hash not found', data: null });
+              }
+            } else {
+              ctx.status = 400;
+              ctx.set('Content-Type', 'application/json');
+              ctx.body = JSON.stringify({ code: -400, message: '请求错误', data: null });
+            }
+          }
+          default: 
+            ctx.status = 400;
+            ctx.set('Content-Type', 'application/json');
+            ctx.body = JSON.stringify({ code: -400, message: '请求错误', data: null });
+        }
+      } catch (e) {
+        ctx.status = 500;
+        ctx.set('Content-Type', 'application/json');
+        ctx.body = JSON.stringify({ code: -500, message: e instanceof Error ? e.message : String(e), data: null });
+      }
+    }
+  ],
   plugins: [],
   async preSave(comment) { // 在保存评论数据前
     if (comment.link && /^\d+$/.test(comment.link.trim())) { // 若输入的链接为纯数字，就将其视为 B 站 UID，并将链接修改为 B 站个人空间网址
