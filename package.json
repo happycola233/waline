@@ -7,6 +7,6 @@
     "@upstash/redis": "latest",
     "@vercel/functions": "latest",
     "@waline/vercel": "latest",
-    "ws": "^8.21.1"
+    "ws": "latest"
   }
 }
