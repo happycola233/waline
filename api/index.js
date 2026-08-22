@@ -12,10 +12,11 @@ export default Waline({
           if (ctx.path.toLowerCase() !== '/api/modules' || ctx.method.toUpperCase() !== 'GET') {
             return next();
           }
+          const params = new URLSearchParams(ctx.querystring);
           try {
-            switch (ctx.param('id')) {
+            switch (params.get('id')) {
               case 'qmimg': {
-                const hash = ctx.param('h');
+                const hash = params.get('h');
                 if (hash && /^[\da-f]{8}-[\da-f]{4}-4[\da-f]{3}-[89ab][\da-f]{3}-[\da-f]{12}$/.test(hash)) {
                   const redis = Redis.fromEnv(), hashes = await redis.get('hashes');
                   const hashInfo = hashes.find(h => h.h === hash);
